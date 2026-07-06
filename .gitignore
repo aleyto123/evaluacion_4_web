@@ -1,0 +1,15 @@
+target/
+*.class
+*.log
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
+.mvn/
+mvnw
+mvnw.cmd
+*.iml
+.DS_Store
+Thumbs.db
+docker-data/

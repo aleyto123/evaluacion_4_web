@@ -1,0 +1,61 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: ${TASK_DB_URL:jdbc:mysql://localhost:3309/tasks_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${TASK_DB_USERNAME:root}
+    password: ${TASK_DB_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers,retries
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      projectService:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+      userService:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 2
+  retry:
+    instances:
+      projectService:
+        max-attempts: 3
+        wait-duration: 1s
+      userService:
+        max-attempts: 3
+        wait-duration: 1s
+
+info:
+  app:
+    name: Task Service
+    description: CRUD de tareas, responsables y avance
+
+app:
+  message: Servicio de tareas operativo
+  fallback-message: No fue posible consultar el servicio requerido. Intente nuevamente.

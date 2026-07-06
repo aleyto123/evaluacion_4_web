@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "Gestion de Proyectos - Microservicios",
+    "description": "Coleccion para demostrar CRUD, Eureka, Gateway, comunicacion entre microservicios y Circuit Breaker.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "gateway",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "eureka",
+      "value": "http://localhost:8761"
+    }
+  ],
+  "item": [
+    {
+      "name": "Actuator y Eureka",
+      "item": [
+        {
+          "name": "Gateway Health",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/actuator/health"
+          }
+        },
+        {
+          "name": "Gateway Info",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/actuator/info"
+          }
+        },
+        {
+          "name": "Gateway Metrics",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/actuator/metrics"
+          }
+        },
+        {
+          "name": "Eureka Dashboard",
+          "request": {
+            "method": "GET",
+            "url": "{{eureka}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Registrar responsable",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ana Torres\",\n  \"email\": \"ana@empresa.com\",\n  \"password\": \"123456\",\n  \"role\": \"PROJECT_MANAGER\"\n}"
+            },
+            "url": "{{gateway}}/api/users/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ana@empresa.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{gateway}}/api/users/login"
+          }
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/api/users"
+          }
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ana Torres Actualizada\",\n  \"email\": \"ana@empresa.com\",\n  \"password\": \"123456\",\n  \"role\": \"PROJECT_MANAGER\"\n}"
+            },
+            "url": "{{gateway}}/api/users/1"
+          }
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway}}/api/users/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Proyectos",
+      "item": [
+        {
+          "name": "Crear proyecto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Implementacion ERP\",\n  \"description\": \"Modernizacion del proceso interno\",\n  \"responsibleId\": 1,\n  \"status\": \"IN_PROGRESS\",\n  \"progress\": 20,\n  \"startDate\": \"2026-07-01\",\n  \"endDate\": \"2026-09-30\"\n}"
+            },
+            "url": "{{gateway}}/api/projects"
+          }
+        },
+        {
+          "name": "Listar proyectos",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/api/projects"
+          }
+        },
+        {
+          "name": "Consultar proyecto por id",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/api/projects/1"
+          }
+        },
+        {
+          "name": "Actualizar proyecto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Implementacion ERP\",\n  \"description\": \"Proyecto actualizado\",\n  \"responsibleId\": 1,\n  \"status\": \"IN_PROGRESS\",\n  \"progress\": 55,\n  \"startDate\": \"2026-07-01\",\n  \"endDate\": \"2026-09-30\"\n}"
+            },
+            "url": "{{gateway}}/api/projects/1"
+          }
+        },
+        {
+          "name": "Eliminar proyecto",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway}}/api/projects/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tareas",
+      "item": [
+        {
+          "name": "Crear tarea",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": 1,\n  \"responsibleId\": 1,\n  \"title\": \"Analisis de requerimientos\",\n  \"description\": \"Relevar necesidades del area usuaria\",\n  \"status\": \"IN_PROGRESS\",\n  \"progress\": 30,\n  \"dueDate\": \"2026-07-20\"\n}"
+            },
+            "url": "{{gateway}}/api/tasks"
+          }
+        },
+        {
+          "name": "Listar tareas",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/api/tasks"
+          }
+        },
+        {
+          "name": "Listar tareas por proyecto",
+          "request": {
+            "method": "GET",
+            "url": "{{gateway}}/api/tasks?projectId=1"
+          }
+        },
+        {
+          "name": "Actualizar avance",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"DONE\",\n  \"progress\": 100\n}"
+            },
+            "url": "{{gateway}}/api/tasks/1/progress"
+          }
+        },
+        {
+          "name": "Actualizar tarea",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": 1,\n  \"responsibleId\": 1,\n  \"title\": \"Analisis funcional\",\n  \"description\": \"Documento funcional terminado\",\n  \"status\": \"DONE\",\n  \"progress\": 100,\n  \"dueDate\": \"2026-07-20\"\n}"
+            },
+            "url": "{{gateway}}/api/tasks/1"
+          }
+        },
+        {
+          "name": "Eliminar tarea",
+          "request": {
+            "method": "DELETE",
+            "url": "{{gateway}}/api/tasks/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Circuit Breaker",
+      "item": [
+        {
+          "name": "Consultar proyectos con user-service detenido",
+          "request": {
+            "method": "GET",
+            "description": "Antes de ejecutar, detener user-service con: docker compose stop user-service",
+            "url": "{{gateway}}/api/projects"
+          }
+        },
+        {
+          "name": "Consultar tareas con project-service detenido",
+          "request": {
+            "method": "GET",
+            "description": "Antes de ejecutar, detener project-service con: docker compose stop project-service",
+            "url": "{{gateway}}/api/tasks"
+          }
+        }
+      ]
+    }
+  ]
+}
